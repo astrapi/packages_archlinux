@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Generiert packages.json aus allen PKGBUILD-Unterordnern."""
+
+import json
+import os
+import re
+import sys
+from pathlib import Path
+
+REPO_URL = "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+
+
+def parse_pkgbuild(path: Path) -> dict:
+    text = path.read_text(errors="replace")
+    def get(key):
+        m = re.search(rf'^{key}=(.+)', text, re.MULTILINE)
+        return m.group(1).strip().strip("'\"") if m else ""
+    return {
+        "name":    get("pkgname"),
+        "pkgver":  get("pkgver"),
+        "pkgdesc": get("pkgdesc"),
+    }
+
+
+def main():
+    root = Path(__file__).parent
+    packages = []
+
+    for d in sorted(root.iterdir()):
+        pkgbuild = d / "PKGBUILD"
+        if not d.is_dir() or not pkgbuild.exists():
+            continue
+        meta = parse_pkgbuild(pkgbuild)
+        if not meta["name"]:
+            meta["name"] = d.name
+        packages.append({
+            "name":    meta["name"],
+            "pkgver":  meta["pkgver"],
+            "pkgdesc": meta["pkgdesc"],
+            "subdir":  d.name,
+            "git_url": REPO_URL,
+        })
+
+    out = root / "packages.json"
+    out.write_text(json.dumps(packages, indent=2, ensure_ascii=False) + "\n")
+    print(f"packages.json: {len(packages)} Pakete geschrieben.")
+
+
+if __name__ == "__main__":
+    main()
