@@ -5,5 +5,12 @@
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+  },
+  {
+    "name": "ungoogled-chromium-bin",
+    "pkgver": "142.0.7444.175",
+    "pkgdesc": "A lightweight approach to removing Google web service dependency",
+    "subdir": "ungoogled-chromium-bin",
+    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
   }
 ]
