@@ -1,0 +1,15 @@
+image: archlinux:latest
+
+stages:
+  - update
+
+check_for_update:
+  stage: update
+  before_script:
+    - pacman -Sy --noconfirm base-devel git
+    - useradd -m builder
+    - chown -R builder:builder .
+  script:
+    - su builder -c "bash .gitlab/update_pkgbuild.sh"
+  only:
+    - schedules

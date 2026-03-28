@@ -1,0 +1,21 @@
+pkgbase = openscad-appimage
+	pkgdesc = The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)
+	pkgver = 2025.11.10.ai28923
+	pkgrel = 5
+	url = https://www.openscad.org/
+	arch = x86_64
+	license = GPL2
+	depends = fuse2
+	provides = openscad
+	conflicts = openscad
+	options = !strip
+	source = OpenSCAD-2025.11.10.ai28923-x86_64.AppImage::https://files.openscad.org/snapshots/OpenSCAD-2025.11.10.ai28923-x86_64.AppImage
+	source = openscad.desktop
+	source = openscad.png::https://openscad.org/assets/img/logo.png
+	source = openscad.xml
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+	sha256sums = SKIP
+
+pkgname = openscad-appimage

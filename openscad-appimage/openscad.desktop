@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=OpenSCAD
+Comment=Create 3D models and compile to STL format
+Exec=env QT_PLUGIN_PATH=/usr/lib/qt/plugins LD_LIBRARY_PATH=/usr/lib:/usr/lib/qt /opt/openscad-appimage/openscad.AppImage %f
+Icon=openscad
+Terminal=false
+Type=Application
+Categories=Graphics;3DGraphics;Engineering;
+MimeType=application/x-openscad;

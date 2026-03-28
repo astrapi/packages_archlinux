@@ -1,0 +1,28 @@
+pkgname=openscad-appimage
+pkgver=2025.11.10.ai28923
+pkgrel=5
+pkgdesc="The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)"
+arch=('x86_64')
+url="https://www.openscad.org/"
+license=('GPL2')
+depends=('fuse2')
+provides=('openscad')
+conflicts=('openscad')
+options=(!strip)
+
+source=(
+  "OpenSCAD-2025.11.10.ai28923-x86_64.AppImage::https://files.openscad.org/snapshots/OpenSCAD-2025.11.10.ai28923-x86_64.AppImage"
+  "openscad.desktop"
+  "openscad.png::https://openscad.org/assets/img/logo.png"
+  "openscad.xml"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
+
+package() {
+  install -Dm755 "OpenSCAD-${pkgver}-x86_64.AppImage" "${pkgdir}/opt/${pkgname}/openscad.AppImage"
+  install -dm755 "${pkgdir}/usr/bin"
+  ln -sf "/opt/${pkgname}/openscad.AppImage" "${pkgdir}/usr/bin/openscad"
+  install -Dm644 "${srcdir}/openscad.desktop" "${pkgdir}/usr/share/applications/openscad.desktop"
+  install -Dm644 "${srcdir}/openscad.png" "${pkgdir}/usr/share/icons/hicolor/256x256/apps/openscad.png"
+  install -Dm644 "openscad.xml" "${pkgdir}/usr/share/mime/packages/openscad.xml"
+}
