@@ -1,6 +1,6 @@
 pkgname=openscad-appimage
-pkgver=2025.11.10.ai28923
-pkgrel=5
+pkgver=2026.01.01.ai30333
+pkgrel=1
 pkgdesc="The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)"
 arch=('x86_64')
 url="https://www.openscad.org/"
@@ -11,7 +11,7 @@ conflicts=('openscad')
 options=(!strip)
 
 source=(
-  "OpenSCAD-2025.11.10.ai28923-x86_64.AppImage::https://files.openscad.org/snapshots/OpenSCAD-2025.11.10.ai28923-x86_64.AppImage"
+  "OpenSCAD-2025.11.10.ai28923-x86_64.AppImage::https://files.openscad.org/snapshots/OpenSCAD-2026.01.01.ai30333-x86_64.AppImage"
   "openscad.desktop"
   "openscad.png::https://openscad.org/assets/img/logo.png"
   "openscad.xml"
