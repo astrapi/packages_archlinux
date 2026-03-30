@@ -2,6 +2,7 @@
   {
     "name": "epsonscan2",
     "pkgver": "6.7.70.0",
+    "pkgrel": "1",
     "pkgdesc": "Epson scanner management utility",
     "subdir": "epsonscan2",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
@@ -9,6 +10,7 @@
   {
     "name": "openscad-appimage",
     "pkgver": "2026.01.01.ai30333",
+    "pkgrel": "1",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
@@ -16,6 +18,7 @@
   {
     "name": "ungoogled-chromium-bin",
     "pkgver": "142.0.7444.175",
+    "pkgrel": "1",
     "pkgdesc": "A lightweight approach to removing Google web service dependency",
     "subdir": "ungoogled-chromium-bin",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"

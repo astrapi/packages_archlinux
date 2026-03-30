@@ -18,6 +18,7 @@ def parse_pkgbuild(path: Path) -> dict:
     return {
         "name":    get("pkgname"),
         "pkgver":  get("pkgver"),
+        "pkgrel":  get("pkgrel"),
         "pkgdesc": get("pkgdesc"),
     }
 
@@ -36,6 +37,7 @@ def main():
         packages.append({
             "name":    meta["name"],
             "pkgver":  meta["pkgver"],
+            "pkgrel":  meta["pkgrel"],
             "pkgdesc": meta["pkgdesc"],
             "subdir":  d.name,
             "git_url": REPO_URL,
