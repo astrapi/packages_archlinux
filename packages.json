@@ -2,14 +2,14 @@
   {
     "name": "epsonscan2",
     "pkgver": "6.7.70.0",
-    "pkgrel": "1",
+    "pkgrel": "2",
     "pkgdesc": "Epson scanner management utility",
     "subdir": "epsonscan2",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
   },
   {
     "name": "openscad-appimage",
-    "pkgver": "2026.01.01.ai30333",
+    "pkgver": "2026.01.02.ai30348",
     "pkgrel": "1",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
