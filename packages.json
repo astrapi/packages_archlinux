@@ -10,7 +10,7 @@
   {
     "name": "openscad-appimage",
     "pkgver": "2026.01.13",
-    "pkgrel": "1",
+    "pkgrel": "2",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
