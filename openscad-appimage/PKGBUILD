@@ -1,11 +1,11 @@
 pkgname=openscad-appimage
 pkgver=2026.01.13
-pkgrel=1
+pkgrel=2
 pkgdesc="The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)"
 arch=('x86_64')
 url="https://www.openscad.org/"
 license=('GPL2')
-depends=('fuse2')
+depends=('fuse2' 'hello')
 provides=('openscad')
 conflicts=('openscad')
 options=(!strip)
