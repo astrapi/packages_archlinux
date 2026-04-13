@@ -1,5 +1,13 @@
 [
   {
+    "name": "bobby",
+    "pkgver": "49.0.4",
+    "pkgrel": "1",
+    "pkgdesc": "Open and browse SQLite database files",
+    "subdir": "bobby",
+    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+  },
+  {
     "name": "epsonscan2",
     "pkgver": "6.7.70.0",
     "pkgrel": "2",
@@ -13,14 +21,6 @@
     "pkgrel": "3",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
-    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
-  },
-  {
-    "name": "bobby",
-    "pkgver": "49.0.4",
-    "pkgrel": "1",
-    "pkgdesc": "Open and browse SQLite database files",
-    "subdir": "bobby",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
   },
   {
