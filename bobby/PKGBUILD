@@ -2,7 +2,7 @@
 
 pkgname=bobby
 pkgver=49.0.4
-pkgrel=6
+pkgrel=7
 pkgdesc="Open and browse SQLite database files"
 arch=('x86_64')
 url="https://github.com/hbons/Bobby"
@@ -19,7 +19,7 @@ prepare() {
   # Bobby ships features=["bundled"] which compiles sqlite3.c via cc crate.
   # This fails silently in the Arch build chroot; switch to system sqlite3.
   sed -i 's/rusqlite = { version = "0.37.0", features = \["bundled"\] }/rusqlite = { version = "0.37.0" }/' Cargo.toml
-  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+  cargo fetch --offline --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
