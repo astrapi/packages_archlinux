@@ -2,7 +2,7 @@
 
 pkgname=bobby
 pkgver=49.0.4
-pkgrel=4
+pkgrel=5
 pkgdesc="Open and browse SQLite database files"
 arch=('x86_64')
 url="https://github.com/hbons/Bobby"
@@ -15,6 +15,8 @@ sha256sums=('c2787dc014778a6ecd8c694bdd8409b177b3c5d8ea66024a6e25aade781e4918')
 prepare() {
   cd "Bobby-${pkgver}"
   export CARGO_HOME="${srcdir}/cargo-home"
+  # Remove stale cargo build cache that persists across CI runs
+  rm -rf target
   cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
