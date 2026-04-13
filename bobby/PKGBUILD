@@ -2,12 +2,12 @@
 
 pkgname=bobby
 pkgver=49.0.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Open and browse SQLite database files"
 arch=('x86_64')
 url="https://github.com/hbons/Bobby"
 license=('GPL-3.0-or-later')
-depends=('gtk4' 'libadwaita' 'glib2')
+depends=('gtk4' 'libadwaita' 'glib2' 'sqlite')
 makedepends=('meson' 'ninja' 'rust' 'cargo')
 source=("https://github.com/hbons/Bobby/releases/download/${pkgver}/Bobby-${pkgver}.tar.xz")
 sha256sums=('c2787dc014778a6ecd8c694bdd8409b177b3c5d8ea66024a6e25aade781e4918')
