@@ -2,7 +2,7 @@
 
 pkgname=bobby
 pkgver=49.0.4
-pkgrel=5
+pkgrel=6
 pkgdesc="Open and browse SQLite database files"
 arch=('x86_64')
 url="https://github.com/hbons/Bobby"
@@ -15,16 +15,18 @@ sha256sums=('c2787dc014778a6ecd8c694bdd8409b177b3c5d8ea66024a6e25aade781e4918')
 prepare() {
   cd "Bobby-${pkgver}"
   export CARGO_HOME="${srcdir}/cargo-home"
-  # Remove stale cargo build cache that persists across CI runs
   rm -rf target
+  # Bobby ships features=["bundled"] which compiles sqlite3.c via cc crate.
+  # This fails silently in the Arch build chroot; switch to system sqlite3.
+  sed -i 's/rusqlite = { version = "0.37.0", features = \["bundled"\] }/rusqlite = { version = "0.37.0" }/' Cargo.toml
   cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
 }
 
 build() {
   cd "Bobby-${pkgver}"
   export CARGO_HOME="${srcdir}/cargo-home"
+  # libsqlite3-sys uses SQLITE3_LIB_DIR to set PKG_CONFIG_PATH and find sqlite3
   export SQLITE3_LIB_DIR=/usr/lib
-  export SQLITE3_INCLUDE_DIR=/usr/include
   arch-meson . build
   ninja -C build
 }
