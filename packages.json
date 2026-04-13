@@ -2,7 +2,7 @@
   {
     "name": "bobby",
     "pkgver": "49.0.4",
-    "pkgrel": "3",
+    "pkgrel": "4",
     "pkgdesc": "Open and browse SQLite database files",
     "subdir": "bobby",
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
