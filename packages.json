@@ -16,6 +16,14 @@
     "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
   },
   {
+    "name": "bobby",
+    "pkgver": "49.0.4",
+    "pkgrel": "1",
+    "pkgdesc": "Open and browse SQLite database files",
+    "subdir": "bobby",
+    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+  },
+  {
     "name": "ungoogled-chromium-bin",
     "pkgver": "142.0.7444.175",
     "pkgrel": "1",

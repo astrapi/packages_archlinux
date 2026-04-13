@@ -1,0 +1,31 @@
+# Maintainer: Michael Otto <michael@otto.family>
+
+pkgname=bobby
+pkgver=49.0.4
+pkgrel=1
+pkgdesc="Open and browse SQLite database files"
+arch=('x86_64')
+url="https://github.com/hbons/Bobby"
+license=('GPL-3.0-or-later')
+depends=('gtk4' 'libadwaita' 'glib2')
+makedepends=('meson' 'ninja' 'rust' 'cargo')
+source=("https://github.com/hbons/Bobby/releases/download/${pkgver}/Bobby-${pkgver}.tar.xz")
+sha256sums=('c2787dc014778a6ecd8c694bdd8409b177b3c5d8ea66024a6e25aade781e4918')
+
+prepare() {
+  cd "Bobby-${pkgver}"
+  export CARGO_HOME="${srcdir}/cargo-home"
+  cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+  cd "Bobby-${pkgver}"
+  export CARGO_HOME="${srcdir}/cargo-home"
+  arch-meson . build
+  ninja -C build
+}
+
+package() {
+  cd "Bobby-${pkgver}"
+  DESTDIR="${pkgdir}" ninja -C build install
+}
