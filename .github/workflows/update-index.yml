@@ -3,8 +3,6 @@ name: Update packages.json
 on:
   push:
     branches: [main]
-    paths:
-      - "*/PKGBUILD"
   workflow_dispatch:
 
 permissions:
