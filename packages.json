@@ -5,7 +5,7 @@
     "pkgrel": "7",
     "pkgdesc": "Open and browse SQLite database files",
     "subdir": "bobby",
-    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
     "name": "epsonscan2",
@@ -13,7 +13,7 @@
     "pkgrel": "2",
     "pkgdesc": "Epson scanner management utility",
     "subdir": "epsonscan2",
-    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
     "name": "openscad-appimage",
@@ -21,7 +21,7 @@
     "pkgrel": "3",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
-    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
     "name": "ungoogled-chromium-bin",
@@ -29,6 +29,6 @@
     "pkgrel": "1",
     "pkgdesc": "A lightweight approach to removing Google web service dependency",
     "subdir": "ungoogled-chromium-bin",
-    "git_url": "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
   }
 ]

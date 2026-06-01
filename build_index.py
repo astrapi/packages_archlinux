@@ -7,7 +7,7 @@ import re
 import sys
 from pathlib import Path
 
-REPO_URL = "https://gitlab.com/astrapi-os/packages/arch_linux.git"
+REPO_URL = "https://github.com/astrapi/packages_archlinux.git"
 
 
 def parse_pkgbuild(path: Path) -> dict:
