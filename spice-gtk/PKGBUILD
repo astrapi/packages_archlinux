@@ -1,0 +1,78 @@
+# Lokales Build des spice-gtk 0.43-Release aus dem Git-Tag,
+# basierend auf dem offiziellen Arch-PKGBUILD (spice-gtk 0.42-5).
+# Hintergrund: 0.43 wird von spice-client-glib 0.8 (Feature v0_43) benötigt,
+# das Release-Tarball ist nur hinter GitLab-Login verfügbar.
+
+pkgname=spice-gtk
+pkgver=0.43
+pkgrel=1
+pkgdesc="GTK+ client library for SPICE"
+arch=('x86_64')
+url="https://www.spice-space.org/"
+license=('LGPL-2.1-only')
+depends=(
+    'acl'
+    'cairo'
+    'gdk-pixbuf2'
+    'glib2'
+    'gst-plugins-base'
+    'gst-plugins-good'
+    'gstreamer'
+    'gtk3'
+    'json-glib'
+    'libcacard'
+    'libcap-ng'
+    'libepoxy'
+    'libjpeg-turbo'
+    'libsasl'
+    'libsoup3'
+    'libusb'
+    'libx11'
+    'lz4'
+    'openssl'
+    'opus'
+    'phodav'
+    'pixman'
+    'polkit'
+    'spice-protocol'
+    'usbredir'
+    'wayland'
+    'zlib'
+)
+makedepends=(
+    'git'
+    'gobject-introspection'
+    'glib2-devel'
+    'meson'
+    'python-six'
+    'python-pyparsing'
+    'usbutils'
+    'vala'
+    'wayland-protocols'
+)
+provides=("spice-glib=$pkgver" "spice-gtk3=$pkgver")
+replaces=('spice-glib' 'spice-gtk3')
+install=spice-gtk.install
+source=("git+https://gitlab.freedesktop.org/spice/spice-gtk.git#tag=v$pkgver"
+        "git+https://gitlab.freedesktop.org/spice/spice-common.git"
+        "git+https://gitlab.com/keycodemap/keycodemapdb.git")
+sha256sums=('SKIP' 'SKIP' 'SKIP')
+
+prepare() {
+  cd $pkgname
+  # .gitmodules verweist relativ auf ../spice-common.git, was mit makepkgs
+  # lokalem Bare-Clone nicht auflösbar ist -> auf die $srcdir-Clones umbiegen.
+  git submodule init
+  git config submodule.spice-common.url "$srcdir/spice-common"
+  git config submodule.keycodemapdb.url "$srcdir/keycodemapdb"
+  git -c protocol.file.allow=always submodule update
+}
+
+build() {
+  arch-meson $pkgname build
+  meson compile -C build
+}
+
+package() {
+  meson install -C build --destdir "$pkgdir"
+}
