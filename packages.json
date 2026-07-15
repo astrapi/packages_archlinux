@@ -16,6 +16,14 @@
     "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
+    "name": "spice-gtk",
+    "pkgver": "0.43",
+    "pkgrel": "1",
+    "pkgdesc": "GTK+ client library for SPICE",
+    "subdir": "spice-gtk",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "ungoogled-chromium-bin",
     "pkgver": "142.0.7444.175",
     "pkgrel": "1",
