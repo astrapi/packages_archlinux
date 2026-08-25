@@ -1,0 +1,31 @@
+# astrapi-sync-cli -- CLI-Client + geteilte Sync-Engine fuer astrapi-sync.
+# Baut vom main-HEAD des Monorepos astrapi-sync-linux (kein PyPI-Release,
+# kein Tag -- reines GitHub-Backup, daher VCS-Paket mit git-basierter
+# pkgver() statt fester Versionsnummer), aus dem Unterordner astrapi-sync-cli.
+
+pkgname=astrapi-sync-cli
+pkgver=r1.0000000
+pkgrel=1
+pkgdesc="CLI-Client + geteilte Sync-Engine fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)"
+arch=('any')
+url="https://github.com/astrapi/astrapi-sync-linux"
+license=('unknown')
+depends=('python' 'python-httpx' 'python-websockets' 'python-watchdog')
+makedepends=('git' 'python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=("$pkgname::git+https://github.com/astrapi/astrapi-sync-linux.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/$pkgname"
+  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$srcdir/$pkgname/astrapi-sync-cli"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$srcdir/$pkgname/astrapi-sync-cli"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+}
