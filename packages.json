@@ -1,5 +1,13 @@
 [
   {
+    "name": "astrapi-sync-cli",
+    "pkgver": "r1.0000000",
+    "pkgrel": "1",
+    "pkgdesc": "CLI-Client + geteilte Sync-Engine fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)",
+    "subdir": "astrapi-sync-cli",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "epsonscan2",
     "pkgver": "6.7.70.0",
     "pkgrel": "2",
