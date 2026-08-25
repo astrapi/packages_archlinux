@@ -28,4 +28,6 @@ build() {
 package() {
   cd "$srcdir/$pkgname/astrapi-sync-cli"
   python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 packaging/systemd/astrapi-sync-cli.service \
+    "$pkgdir/usr/lib/systemd/user/astrapi-sync-cli.service"
 }
