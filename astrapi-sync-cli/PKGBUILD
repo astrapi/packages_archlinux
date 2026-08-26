@@ -1,10 +1,13 @@
 # astrapi-sync-cli -- CLI-Client + geteilte Sync-Engine fuer astrapi-sync.
 # Baut vom main-HEAD des Monorepos astrapi-sync-linux (kein PyPI-Release,
-# kein Tag -- reines GitHub-Backup, daher VCS-Paket mit git-basierter
-# pkgver() statt fester Versionsnummer), aus dem Unterordner astrapi-sync-cli.
+# daher weiterhin ein VCS-Paket mit git-basierter pkgver() statt fester
+# Versionsnummer), aus dem Unterordner astrapi-sync-cli. Ab jetzt CalVer-
+# Tags vYY.M.N wie die uebrigen astrapi-Projekte (astrapi-tools/release.sh) --
+# pkgver() liest den letzten Tag per `git describe`, kein fest verdrahtetes
+# "r<Commit-Anzahl>.<Hash>" mehr wie zuvor.
 
 pkgname=astrapi-sync-cli
-pkgver=r1.0000000
+pkgver=26.8.1.r0.0000000
 pkgrel=1
 pkgdesc="CLI-Client + geteilte Sync-Engine fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)"
 arch=('any')
@@ -17,7 +20,9 @@ sha256sums=('SKIP')
 
 pkgver() {
   cd "$srcdir/$pkgname"
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  # vYY.M.N-<Commits-seit-Tag>-g<Hash> -> YY.M.N.r<Commits-seit-Tag>.<Hash>
+  # (pacman erlaubt kein '-' in pkgver, "r0" markiert einen exakten Tag-Stand).
+  git describe --tags --long | sed -E 's/^v//; s/-([0-9]+)-g([0-9a-f]+)$/.r\1.\2/'
 }
 
 build() {
