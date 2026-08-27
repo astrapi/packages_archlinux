@@ -7,6 +7,16 @@
 # eines Patches ein Downgrade von sip auf die zuletzt bekannt funktionierende
 # Version 6.10.0 vor dem eigentlichen Build.
 #
+# Downgrade per pip statt pacman -U: das Arch-Paket sip-6.10.0 wurde gebaut
+# als der Python-ABI-Stand der Rolling Release noch aelter war und installiert
+# seine Dateien nach dem damaligen /usr/lib/python3.1X/site-packages/ -- auf
+# einem aktuellen System (hier Python 3.14) findet der laufende Interpreter
+# "sipbuild" dort nicht mehr ("ModuleNotFoundError", CMake "Could not find
+# SIP"). sip ist ein reines "py3-none-any"-Wheel (keine C-Extension), pip
+# installiert deshalb automatisch in den site-packages-Pfad des gerade
+# laufenden Python -- unabhaengig davon, welche Python-Version beim Bauen des
+# Arch-Pakets aktuell war.
+#
 # Maintainer (Original): Stephan Springer <buzo+arch@Lini.de>
 # Contributor: Balló György <ballogyor+arch at gmail dot com>
 # Contributor: Bruno Pagani <archange@archlinux.org>
@@ -22,7 +32,7 @@
 _pkgname=qgis
 pkgname="$_pkgname"-ltr
 pkgver=3.44.12
-pkgrel=2
+pkgrel=3
 pkgdesc='Geographic Information System (GIS); Long Term Release (mit sip-6.10.0-Workaround fuer QGIS#61951)'
 arch=(x86_64)
 url='https://qgis.org/'
@@ -84,6 +94,7 @@ makedepends=(
   ninja
   opencl-clhpp
   pyqt-builder
+  python-pip
   sip
 )
 optdepends=(
@@ -93,20 +104,21 @@ optdepends=(
 provides=("$_pkgname=$pkgver")
 conflicts=("$_pkgname")
 _sip_fix_ver=6.10.0
-_sip_fix_pkg="sip-${_sip_fix_ver}-1-any.pkg.tar.zst"
+_sip_fix_whl="sip-${_sip_fix_ver}-1-py3-none-any.whl"
 
 source=("$url/downloads/$_pkgname-$pkgver.tar.bz2"
         https://github.com/JanCaha/QGIS/commit/67af3cdf8bfd8c482c718beb1452ac7dc0d3bd0c.patch
-        "https://archive.archlinux.org/packages/s/sip/${_sip_fix_pkg}")
+        "https://files.pythonhosted.org/packages/04/85/317e2d2a3e926e928c85ea935bc5991ae09181ebdc724b4144546656fbce/${_sip_fix_whl}")
 sha256sums=('62547cefa7818e7453e4043e6073797eb1a8886b7a8dfbc4765f57b931404a57'
             '9cc3cc824792d5a3ede3ff499b77c81241a5451952c6e9ae8104c02b37737827'
-            '506d0db483c8be17625a9bf2bcfbdbb03763a7ee6d600a90ac540b5cb86e1042')
+            '3bd6e5ab6e5bc8e5531bbf4ff299781bc2ee5c39da876072e0465efdad215896')
 
 prepare() {
   # Zuletzt bekannt funktionierende sip-Version, siehe Kommentar oben.
-  if ! pacman -Q sip 2>/dev/null | grep -q " ${_sip_fix_ver}-"; then
+  if ! pip show sip 2>/dev/null | grep -q "^Version: ${_sip_fix_ver}$"; then
     echo "==> sip auf ${_sip_fix_ver} herunterstufen (QGIS#61951) ..."
-    sudo pacman -U --noconfirm "$srcdir/${_sip_fix_pkg}"
+    sudo pip install --break-system-packages --force-reinstall --no-deps \
+      "$srcdir/${_sip_fix_whl}"
   fi
 
   cd "$_pkgname-$pkgver"
