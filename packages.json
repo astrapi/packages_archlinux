@@ -24,7 +24,7 @@
     "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
-    "name": "$_pkgname\"-ltr",
+    "name": "qgis-ltr",
     "pkgver": "3.44.12",
     "pkgrel": "2",
     "pkgdesc": "Geographic Information System (GIS); Long Term Release (mit sip-6.10.0-Workaround fuer QGIS#61951)",
