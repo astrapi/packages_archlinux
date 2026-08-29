@@ -1,0 +1,42 @@
+# astrapi-os -- GNOME-Shell-Erweiterung (Monorepo astrapi-gnome).
+# Baut vom main-HEAD, kein Release-Tag vorhanden -> VCS-Paket mit
+# git-basierter pkgver() (klassisches r<Commit-Anzahl>.<Hash>-Schema,
+# analog zu astrapi-sync-cli vor dessen Umstellung auf CalVer-Tags).
+# Reine JS/GJS-Erweiterung ohne Build-Schritt (keine kompilierten
+# GSettings-Schemas mehr seit T-017-ASTRAPI-OS) -- package() kopiert
+# nur die Laufzeitdateien.
+
+pkgname=astrapi-os
+pkgver=1.r0.0000000
+pkgrel=1
+pkgdesc="GNOME-Shell-Erweiterung: baut GNOME zu einem Windows-aehnlichen Desktop um (Taskbar, Multi-Monitor-Panels, Zonen-Tiling, App-Grid, Spotlight-Suche, Power-Menue, Arch-Update-Anzeige, Claude-Nutzungsanzeige)"
+arch=('any')
+url="https://github.com/astrapi/astrapi-gnome"
+license=('unknown')
+depends=('gnome-shell' 'libadwaita' 'gtk4' 'libsecret' 'libsoup3')
+optdepends=(
+    'pacman-contrib: checkupdates fuer den Arch-Update-Indikator'
+    'fakeroot: von checkupdates vorausgesetzt (sonst Fallback auf veraltetes pacman -Qu)'
+    'polkit: pkexec fuer "Jetzt aktualisieren" im Update-Menue'
+    'htop: Task-Manager im Panel-Rechtsklickmenue'
+    'gnome-console: Terminal fuer Update/Task-Manager (alternativ gnome-terminal, ptyxis, xterm)'
+)
+makedepends=('git')
+source=("$pkgname::git+https://github.com/astrapi/astrapi-gnome.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/$pkgname"
+  printf "1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  local dest="$pkgdir/usr/share/gnome-shell/extensions/astrapi-os@astrapi.de"
+  install -dm755 "$dest"
+  cp -r extension.js metadata.json prefs.js stylesheet.css icons modules tools "$dest/"
+  find "$dest" -type d -exec chmod 755 {} +
+  find "$dest" -type f -exec chmod 644 {} +
+  chmod 755 "$dest/tools/claude-usage-statusline.py"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+}
