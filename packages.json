@@ -1,7 +1,7 @@
 [
   {
     "name": "astrapi-gnome",
-    "pkgver": "26.8.1.r0.0000000",
+    "pkgver": "26.8.1",
     "pkgrel": "1",
     "pkgdesc": "GNOME-Shell-Erweiterung: baut GNOME zu einem Windows-aehnlichen Desktop um (Taskbar, Multi-Monitor-Panels, Zonen-Tiling, App-Grid, Spotlight-Suche, Power-Menue, Arch-Update-Anzeige, Claude-Nutzungsanzeige)",
     "subdir": "astrapi-gnome",
