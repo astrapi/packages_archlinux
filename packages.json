@@ -1,5 +1,13 @@
 [
   {
+    "name": "astrapi-os",
+    "pkgver": "1.r0.0000000",
+    "pkgrel": "1",
+    "pkgdesc": "GNOME-Shell-Erweiterung: baut GNOME zu einem Windows-aehnlichen Desktop um (Taskbar, Multi-Monitor-Panels, Zonen-Tiling, App-Grid, Spotlight-Suche, Power-Menue, Arch-Update-Anzeige, Claude-Nutzungsanzeige)",
+    "subdir": "astrapi-os",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "astrapi-sync-cli",
     "pkgver": "26.8.1.r0.0000000",
     "pkgrel": "1",
