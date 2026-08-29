@@ -12,7 +12,7 @@ pkgrel=1
 pkgdesc="GNOME-Shell-Erweiterung: baut GNOME zu einem Windows-aehnlichen Desktop um (Taskbar, Multi-Monitor-Panels, Zonen-Tiling, App-Grid, Spotlight-Suche, Power-Menue, Arch-Update-Anzeige, Claude-Nutzungsanzeige)"
 arch=('any')
 url="https://github.com/astrapi/astrapi-gnome"
-license=('unknown')
+license=('GPL-3.0-or-later')
 depends=('gnome-shell' 'libadwaita' 'gtk4' 'libsecret' 'libsoup3')
 optdepends=(
     'pacman-contrib: checkupdates fuer den Arch-Update-Indikator'
