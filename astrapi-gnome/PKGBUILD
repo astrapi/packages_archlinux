@@ -1,13 +1,12 @@
-# astrapi-os -- GNOME-Shell-Erweiterung (Monorepo astrapi-gnome).
-# Baut vom main-HEAD, kein Release-Tag vorhanden -> VCS-Paket mit
-# git-basierter pkgver() (klassisches r<Commit-Anzahl>.<Hash>-Schema,
-# analog zu astrapi-sync-cli vor dessen Umstellung auf CalVer-Tags).
-# Reine JS/GJS-Erweiterung ohne Build-Schritt (keine kompilierten
-# GSettings-Schemas mehr seit T-017-ASTRAPI-OS) -- package() kopiert
-# nur die Laufzeitdateien.
+# astrapi-gnome -- GNOME-Shell-Erweiterung "Astrapi OS" (UUID astrapi-os@astrapi.de,
+# Repo/Vault-Name astrapi-gnome -- Paketname folgt dem Repo, nicht der UUID).
+# CalVer-Tags vYY.M.N wie die uebrigen astrapi-Projekte (astrapi-tools/release.sh) --
+# pkgver() liest den letzten Tag per `git describe`. Reine JS/GJS-Erweiterung
+# ohne Build-Schritt (keine kompilierten GSettings-Schemas mehr seit
+# T-017-ASTRAPI-OS) -- package() kopiert nur die Laufzeitdateien.
 
-pkgname=astrapi-os
-pkgver=1.r0.0000000
+pkgname=astrapi-gnome
+pkgver=26.8.1.r0.0000000
 pkgrel=1
 pkgdesc="GNOME-Shell-Erweiterung: baut GNOME zu einem Windows-aehnlichen Desktop um (Taskbar, Multi-Monitor-Panels, Zonen-Tiling, App-Grid, Spotlight-Suche, Power-Menue, Arch-Update-Anzeige, Claude-Nutzungsanzeige)"
 arch=('any')
@@ -27,7 +26,9 @@ sha256sums=('SKIP')
 
 pkgver() {
   cd "$srcdir/$pkgname"
-  printf "1.r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  # vYY.M.N-<Commits-seit-Tag>-g<Hash> -> YY.M.N.r<Commits-seit-Tag>.<Hash>
+  # (pacman erlaubt kein '-' in pkgver, "r0" markiert einen exakten Tag-Stand).
+  git describe --tags --long | sed -E 's/^v//; s/-([0-9]+)-g([0-9a-f]+)$/.r\1.\2/'
 }
 
 package() {
