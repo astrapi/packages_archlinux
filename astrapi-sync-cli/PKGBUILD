@@ -8,7 +8,7 @@
 # zu astrapi-gnome).
 
 pkgname=astrapi-sync-cli
-pkgver=26.8.1
+pkgver=26.8.2
 pkgrel=1
 pkgdesc="CLI-Client + geteilte Sync-Engine fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)"
 arch=('any')
