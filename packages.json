@@ -8,6 +8,14 @@
     "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
+    "name": "astrapi-os",
+    "pkgver": "1.0.0",
+    "pkgrel": "1",
+    "pkgdesc": "Meta-Paket: astrapi-Standard-Baseline (grml-zsh-config, vim-config)",
+    "subdir": "astrapi-os",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "astrapi-sync-cli",
     "pkgver": "26.8.2",
     "pkgrel": "1",
