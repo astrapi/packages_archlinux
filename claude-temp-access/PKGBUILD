@@ -1,0 +1,22 @@
+# Maintainer: Michael Otto <michael@astrapi.de>
+#
+# Portiert aus packages_debian/claude-temp-access -- reines Bash/
+# coreutils/systemd/sudo-Tooling, unveraendert uebernommen (nichts
+# Debian-Spezifisches: useradd/usermod/userdel/visudo/systemctl/
+# journalctl gibt es identisch auf Arch). depends=() bewusst leer wie im
+# Debian-Original: setzt sudo + laufendes systemd voraus, die auf jedem
+# Zielsystem ohnehin vorhanden sind.
+pkgname=claude-temp-access
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Temporären, eng begrenzten SSH/sudo-Zugang für Claude Code auf bare-metal-Servern einrichten/entfernen"
+arch=('any')
+url="https://github.com/astrapi/packages_archlinux"
+depends=()
+source=('claude-access-enable.sh' 'claude-access-disable.sh')
+sha256sums=('SKIP' 'SKIP')
+
+package() {
+    install -Dm755 claude-access-enable.sh "$pkgdir/usr/local/sbin/claude-access-enable"
+    install -Dm755 claude-access-disable.sh "$pkgdir/usr/local/sbin/claude-access-disable"
+}
