@@ -24,6 +24,14 @@
     "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
+    "name": "claude-temp-access",
+    "pkgver": "1.1.0",
+    "pkgrel": "1",
+    "pkgdesc": "Temporären, eng begrenzten SSH/sudo-Zugang für Claude Code auf bare-metal-Servern einrichten/entfernen",
+    "subdir": "claude-temp-access",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "epsonscan2",
     "pkgver": "6.7.70.0",
     "pkgrel": "2",
