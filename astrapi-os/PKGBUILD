@@ -1,0 +1,19 @@
+# Maintainer: Michael Otto <michael@astrapi.de>
+#
+# Reines Meta-Paket, kein eigener Inhalt: buendelt die astrapi-
+# Standard-Baseline in einem Befehl statt "pacman -S grml-zsh-config
+# vim-config" jedes Mal einzeln zu tippen. grml-zsh-config kommt aus dem
+# offiziellen Arch-Repo (extra), vim-config aus diesem Repo -- pacman
+# loest beides transparent auf, solange beide Repos konfiguriert sind.
+pkgname=astrapi-os
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Meta-Paket: astrapi-Standard-Baseline (grml-zsh-config, vim-config)"
+arch=('any')
+url="https://github.com/astrapi/packages_archlinux"
+depends=('grml-zsh-config' 'vim-config')
+source=()
+
+package() {
+    return 0
+}
