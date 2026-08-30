@@ -1,0 +1,37 @@
+# Maintainer: Michael Otto <michael@astrapi.de>
+#
+# Ziel: systemweit "set mouse-=a" (verhindert, dass Vim per Default
+# Mausklicks/-drags fuer die eigene Visual-Mode-Selektion abfaengt, statt
+# normale Terminal-Textauswahl zuzulassen), konsistent auf allen
+# PCs/LXCs.
+#
+# ANDERS als packages_debian/vim-config: /etc/vimrc gehoert hier bereits
+# dem offiziellen Paket vim-runtime (verifiziert per "pacman -Qo
+# /etc/vimrc") -- kein separater Hook wie Debians /etc/vim/vimrc.local,
+# Arch erwartet laut vim-runtimes eigenem Kommentar in /etc/vimrc
+# ausdruecklich, dass Admins genau diese Datei direkt editieren. Eine
+# eigene Datei an diesem Pfad auszuliefern waere ein Dateikonflikt mit
+# vim-runtime. Stattdessen haengt vim-config.install (post_install/
+# post_upgrade) die Zeile idempotent an die bestehende Datei an, statt
+# sie zu ersetzen -- Details und bekannte Grenzen dort.
+#
+# Kein AUR-Duplikat -- rein selbst erfunden, kein Upstream zum Pruefen.
+pkgname=vim-config
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Systemweite Vim-Konfiguration (deaktiviert Maus-Erfassung, damit Terminal-Textauswahl normal funktioniert)"
+arch=('any')
+url="https://github.com/astrapi/packages_archlinux"
+depends=('vim')
+install=vim-config.install
+source=()
+
+package() {
+    install -Dm644 /dev/null "${pkgdir}/usr/share/doc/${pkgname}/README"
+    cat > "${pkgdir}/usr/share/doc/${pkgname}/README" << 'EOF'
+vim-config liefert keine eigene Datei aus. Beim Installieren/
+Aktualisieren haengt vim-config.install "set mouse-=a" an /etc/vimrc an
+(gehoert dem Paket vim-runtime, siehe PKGBUILD-Kommentar) -- beim
+Entfernen wird der Block wieder ausgehaengt.
+EOF
+}

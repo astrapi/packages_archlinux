@@ -1,0 +1,47 @@
+# vim-config.install
+#
+# /etc/vimrc gehoert bereits dem Paket vim-runtime (verifiziert per
+# "pacman -Qo /etc/vimrc") -- ein eigenes Paket kann diese Datei nicht
+# selbst ausliefern, ohne mit vim-runtime in einen Dateikonflikt zu
+# geraten. Stattdessen haengt dieses Skript "set mouse-=a" idempotent an
+# die bestehende Datei an (Marker-Kommentar verhindert Duplikate bei
+# post_upgrade), statt sie zu ersetzen.
+#
+# Bekannte Grenze: aktualisiert vim-runtime seine eigene /etc/vimrc
+# (Conffile-Mechanismus, .pacnew), greift dieses Skript nicht erneut --
+# es laeuft nur bei Install/Upgrade/Remove von vim-config selbst. Wird
+# ein .pacnew von Hand uebernommen, muss "set mouse-=a" danach neu
+# gesetzt werden (z.B. per "pacman -S vim-config" erneut ausloesen).
+
+_marker="vim-config (astrapi-packages)"
+_target=/etc/vimrc
+
+_add_line() {
+  [ -f "$_target" ] || return 0
+  grep -qF "$_marker" "$_target" && return 0
+  cat >>"$_target" <<EOF
+" >>> ${_marker} >>>
+" Verhindert, dass Vim per Default (mouse=a) Mausklicks/-drags fuer die
+" eigene Visual-Mode-Selektion abfaengt -- ohne das laesst sich Text im
+" Terminal nicht mehr normal per Maus markieren/kopieren.
+set mouse-=a
+" <<< ${_marker} <<<
+EOF
+}
+
+_remove_line() {
+  [ -f "$_target" ] || return 0
+  sed -i "/\" >>> ${_marker} >>>/,/\" <<< ${_marker} <<</d" "$_target"
+}
+
+post_install() {
+  _add_line
+}
+
+post_upgrade() {
+  _add_line
+}
+
+pre_remove() {
+  _remove_line
+}
