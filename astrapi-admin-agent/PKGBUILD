@@ -1,0 +1,53 @@
+# astrapi-admin-agent -- Linux-Agent fuer astrapi-admin (Konfigurations-
+# durchsetzung auf verwalteten Hosts: Pakete/Services/Config-Dateien).
+# Baut vom main-HEAD des eigenstaendigen Repos astrapi-admin-agent (kein
+# PyPI-Release, daher VCS-Paket mit git-basierter pkgver() statt fester
+# Versionsnummer). CalVer-Tags vYY.M.N wie die uebrigen astrapi-Projekte
+# (astrapi-tools/release.sh) -- pkgver() liest den letzten Tag per
+# `git describe`. Bei exaktem Tag-Stand reine Tag-Version, sonst
+# ".r<Commits>"-Suffix -- kein Hash (analog zu astrapi-sync-cli).
+#
+# Anders als astrapi-sync-cli (systemd --user-Daemon): dieser Agent
+# braucht root (Pakete/Services/beliebige Config-Pfade, siehe
+# astrapi_admin_agent.cli._require_root()) -- deshalb ein SYSTEM-Service
+# (kein User=, laeuft dadurch als root) unter /usr/lib/systemd/system/,
+# nicht .../user/, plus der zugehoerige .timer fuers periodische apply.
+
+pkgname=astrapi-admin-agent
+pkgver=26.8.1
+pkgrel=1
+pkgdesc="Linux-Agent fuer astrapi-admin (Policy-Durchsetzung: Pakete, Services, Config-Dateien)"
+arch=('any')
+url="https://github.com/astrapi/astrapi-admin-agent"
+license=('GPL-3.0-or-later')
+depends=('python' 'python-httpx')
+makedepends=('git' 'python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=("$pkgname::git+https://github.com/astrapi/astrapi-admin-agent.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/$pkgname"
+  # Exakter Tag-Stand -> reine Tag-Version (z.B. "26.8.1"). Sonst
+  # vYY.M.N-<Commits-seit-Tag>-g<Hash> -> YY.M.N.r<Commits-seit-Tag>
+  # (pacman erlaubt kein '-' in pkgver; Hash bewusst weggelassen).
+  local desc="$(git describe --tags --long)"
+  if [[ "$desc" =~ -0-g[0-9a-f]+$ ]]; then
+    printf '%s' "${desc%-0-g*}" | sed 's/^v//'
+  else
+    printf '%s' "$desc" | sed -E 's/^v//; s/-([0-9]+)-g[0-9a-f]+$/.r\1/'
+  fi
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 packaging/systemd/astrapi-admin-agent.service \
+    "$pkgdir/usr/lib/systemd/system/astrapi-admin-agent.service"
+  install -Dm644 packaging/systemd/astrapi-admin-agent.timer \
+    "$pkgdir/usr/lib/systemd/system/astrapi-admin-agent.timer"
+}
