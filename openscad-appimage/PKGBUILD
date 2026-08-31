@@ -1,5 +1,5 @@
 pkgname=openscad-appimage
-pkgver=2026.08.29
+pkgver=2026.08.30
 pkgrel=1
 pkgdesc="The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)"
 arch=('x86_64')
