@@ -22,3 +22,10 @@ prefix = "v"
 source = "regex"
 url = "https://files.openscad.org/snapshots/"
 regex = "OpenSCAD-([0-9]{4}\\.[0-9]{2}\\.[0-9]{2})-x86_64\\.AppImage"
+
+[eizoctl]
+source = "gitea"
+gitea = "p/usb-drivers"
+host = "git.janouch.name"
+use_max_tag = true
+prefix = "v"

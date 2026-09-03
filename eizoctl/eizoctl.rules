@@ -1,0 +1,5 @@
+# EIZO ColorEdge-Monitore (USB-HID) -- gewaehrt der aktiven grafischen
+# Session Zugriff ohne Root/Setuid, analog zu systemds eigenen
+# 70-uaccess.rules fuer andere lokale Geraeteklassen.
+SUBSYSTEM=="usb", ATTR{idVendor}=="056d", TAG+="uaccess"
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="056d", TAG+="uaccess"

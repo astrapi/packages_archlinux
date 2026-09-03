@@ -1,0 +1,57 @@
+# eizoctl -- Steuerung von EIZO-ColorEdge-Monitoren (Helligkeit,
+# Eingangsquelle) per USB-HID, aus dem usb-drivers-Monorepo von janouch.
+# Nur der eizoctl-Build-Target wird gebaut/installiert, nicht die drei
+# anderen, unabhaengigen Geraete-Tools desselben Repos
+# (elksmart-comm/razer-bw-te-ctl/upscat) -- die brauchen zusaetzliche
+# Dependencies (libusb/iconv) fuer Geraete, die hier nicht im Einsatz sind.
+#
+# Baut standardmaessig setuid-root (CMake-Variable SETUID), weil Upstream
+# keine udev-Regel mitliefert. Hier stattdessen -DSETUID= (leer) und eine
+# eigene udev-Regel mit TAG+="uaccess" (systemd-logind gewaehrt der
+# aktiven grafischen Session automatisch Zugriff, kein Root/Setuid noetig).
+#
+# usb-drivers hat ein Git-Submodul (liberty, janouchs eigene
+# C-Utility-Library, nur zum Bauen benoetigt) -- makepkgs lokaler
+# Bare-Clone kann die relative/eigene .gitmodules-URL nicht aufloesen,
+# daher zweiter git-Source-Eintrag + URL-Umbiegung in prepare() (exakt
+# das Muster aus spice-gtk/PKGBUILD fuer spice-common/keycodemapdb).
+
+pkgname=eizoctl
+pkgver=1.2.0
+pkgrel=1
+pkgdesc="Control brightness and input port of EIZO ColorEdge monitors via USB HID"
+arch=('x86_64')
+url="https://git.janouch.name/p/usb-drivers"
+license=('0BSD')
+depends=('hidapi')
+makedepends=('cmake' 'git')
+install=eizoctl.install
+source=("usb-drivers::git+https://git.janouch.name/p/usb-drivers.git#tag=v$pkgver"
+        "liberty::git+https://git.janouch.name/p/liberty.git"
+        "eizoctl.rules")
+sha256sums=('SKIP'
+            'SKIP'
+            '544140009feb20271a1cd7a5fafa4c43cb67b88c25f04a3935adf5bb0b947fe4')
+
+prepare() {
+  cd usb-drivers
+  git submodule init
+  git config submodule.liberty.url "$srcdir/liberty"
+  git -c protocol.file.allow=always submodule update
+}
+
+build() {
+  cmake -B build -S usb-drivers \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DSETUID=
+  cmake --build build --target eizoctl
+}
+
+package() {
+  install -Dm755 build/eizoctl "$pkgdir/usr/bin/eizoctl"
+  install -Dm644 usb-drivers/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 eizoctl.rules "$pkgdir/usr/lib/udev/rules.d/71-eizoctl.rules"
+}
+
+# vim:set ts=2 sw=2 et:
