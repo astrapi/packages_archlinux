@@ -1,15 +1,36 @@
 # Upstream-Versions-Check fuer PKGBUILDs ohne eigenen Update-Mechanismus.
 #
 # Nicht enthalten und bewusst nicht noetig:
-# - astrapi-gnome, astrapi-sync-cli: tracken sich selbst ueber pkgver() +
-#   git describe gegen den eigenen main-HEAD, kein externer Upstream.
+# - astrapi-gnome: trackt sich selbst ueber pkgver() + git describe gegen
+#   den eigenen main-HEAD, kein externer Upstream.
 # - epsonscan2, ungoogled-chromium-bin: existieren unter demselben Namen
 #   auf AUR -- der bestehende Update-Check im astrapi-packages-Server
 #   fragt AUR-RPC bereits ungefiltert fuer jeden Paketnamen ab und erkennt
 #   Veraltung dort schon automatisch.
 #
+# astrapi-admin-agent/astrapi-sync-cli waren hier zunaechst bewusst
+# ausgeschlossen ("wir sind ja selbst der Upstream, wir wissen es schon")
+# -- Nutzerentscheidung 2026-09-04, umgekehrt: die pkgver-Bumps wurden in
+# der Praxis trotzdem vergessen (siehe astrapi-hub-Daily), automatische
+# Erkennung ist deshalb doch sinnvoller als die manuelle Erinnerung.
+#
 # nvchecker meldet nur "es gibt Version X" -- das Anpassen der PKGBUILD
 # selbst (pkgver ersetzen, pkgrel zuruecksetzen) macht ein separates Skript.
+
+[astrapi-admin-agent]
+source = "github"
+github = "astrapi/astrapi-admin-agent"
+use_max_tag = true
+prefix = "v"
+
+[astrapi-sync-cli]
+# Paketname weicht vom echten Repo-Namen ab (astrapi-sync-linux) -- per
+# curl gegen die GitHub-API verifiziert, astrapi/astrapi-sync-cli
+# existiert nicht (404).
+source = "github"
+github = "astrapi/astrapi-sync-linux"
+use_max_tag = true
+prefix = "v"
 
 [spice-gtk]
 source = "gitlab"
