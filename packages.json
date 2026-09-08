@@ -1,7 +1,7 @@
 [
   {
     "name": "astrapi-admin-agent",
-    "pkgver": "26.9.2",
+    "pkgver": "26.9.3",
     "pkgrel": "1",
     "pkgdesc": "Linux-Agent fuer astrapi-admin (Policy-Durchsetzung: Pakete, Services, Config-Dateien)",
     "subdir": "astrapi-admin-agent",
@@ -57,7 +57,7 @@
   },
   {
     "name": "openscad-appimage",
-    "pkgver": "2026.09.05",
+    "pkgver": "2026.09.06",
     "pkgrel": "1",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
