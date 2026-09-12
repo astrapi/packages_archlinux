@@ -23,6 +23,12 @@ github = "astrapi/astrapi-admin-agent"
 use_max_tag = true
 prefix = "v"
 
+[astrapi-sync-gtk]
+source = "github"
+github = "astrapi/astrapi-sync-gtk"
+use_max_tag = true
+prefix = "v"
+
 [astrapi-sync-cli]
 # Paketname weicht vom echten Repo-Namen ab (astrapi-sync-linux) -- per
 # curl gegen die GitHub-API verifiziert, astrapi/astrapi-sync-cli

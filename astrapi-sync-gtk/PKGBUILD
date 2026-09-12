@@ -1,0 +1,59 @@
+# astrapi-sync-gtk -- GTK4/libadwaita-Desktop-Client fuer astrapi-sync.
+# Baut vom main-HEAD des eigenstaendigen Repos astrapi-sync-gtk (kein
+# PyPI-Release, daher VCS-Paket mit git-basierter pkgver() statt fester
+# Versionsnummer). CalVer-Tags vYY.M.N wie die uebrigen astrapi-Projekte
+# (astrapi-tools/release.sh) -- pkgver() liest den letzten Tag per
+# `git describe`. Bei exaktem Tag-Stand reine Tag-Version, sonst
+# ".r<Commits>"-Suffix -- kein Hash (analog zu astrapi-sync-cli/
+# astrapi-admin-agent).
+#
+# Repo erst am 2026-09-12 auf GitHub angelegt (siehe T-027-ARCHLINUX),
+# erster Tag v26.9.1.
+#
+# Kein systemd-Service: Hintergrund-Sync laeuft als Thread *innerhalb*
+# des GTK-Prozesses (siehe astrapi_sync_gtk/background.py), anders als
+# astrapi-sync-cli (eigener systemd --user-Daemon). Stattdessen
+# .desktop-Datei + Icon fuer den Anwendungsstarter.
+#
+# depends: astrapi-sync-cli liefert das Python-Paket astrapi_sync_cli
+# (Config/API-Client/Sync-Engine/Hintergrund-Daemon-Code, siehe dessen
+# eigene pyproject.toml) -- python-gobject/gtk4/libadwaita sind
+# Standard-Arch-Repos (core/extra), keine AUR-Abhaengigkeit noetig.
+pkgname=astrapi-sync-gtk
+pkgver=26.9.1
+pkgrel=1
+pkgdesc="GTK4/libadwaita-Desktop-Client fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)"
+arch=('any')
+url="https://github.com/astrapi/astrapi-sync-gtk"
+license=('GPL-3.0-or-later')
+depends=('astrapi-sync-cli' 'python-gobject' 'gtk4' 'libadwaita')
+makedepends=('git' 'python-build' 'python-installer' 'python-wheel' 'python-setuptools')
+source=("$pkgname::git+https://github.com/astrapi/astrapi-sync-gtk.git")
+sha256sums=('SKIP')
+
+pkgver() {
+  cd "$srcdir/$pkgname"
+  # Exakter Tag-Stand -> reine Tag-Version (z.B. "26.9.1"). Sonst
+  # vYY.M.N-<Commits-seit-Tag>-g<Hash> -> YY.M.N.r<Commits-seit-Tag>
+  # (pacman erlaubt kein '-' in pkgver; Hash bewusst weggelassen).
+  local desc="$(git describe --tags --long)"
+  if [[ "$desc" =~ -0-g[0-9a-f]+$ ]]; then
+    printf '%s' "${desc%-0-g*}" | sed 's/^v//'
+  else
+    printf '%s' "$desc" | sed -E 's/^v//; s/-([0-9]+)-g[0-9a-f]+$/.r\1/'
+  fi
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  python -m build --wheel --no-isolation
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 data/de.astrapi.sync.Gtk.desktop \
+    "$pkgdir/usr/share/applications/de.astrapi.sync.Gtk.desktop"
+  install -Dm644 data/icons/de.astrapi.sync.Gtk.svg \
+    "$pkgdir/usr/share/icons/hicolor/scalable/apps/de.astrapi.sync.Gtk.svg"
+}

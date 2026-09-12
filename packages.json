@@ -32,6 +32,14 @@
     "git_url": "https://github.com/astrapi/packages_archlinux.git"
   },
   {
+    "name": "astrapi-sync-gtk",
+    "pkgver": "26.9.1",
+    "pkgrel": "1",
+    "pkgdesc": "GTK4/libadwaita-Desktop-Client fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)",
+    "subdir": "astrapi-sync-gtk",
+    "git_url": "https://github.com/astrapi/packages_archlinux.git"
+  },
+  {
     "name": "claude-temp-access",
     "pkgver": "1.1.0",
     "pkgrel": "1",
