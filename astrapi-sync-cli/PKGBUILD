@@ -9,7 +9,7 @@
 
 pkgname=astrapi-sync-cli
 pkgver=26.8.2
-pkgrel=1
+pkgrel=2
 pkgdesc="CLI-Client + geteilte Sync-Engine fuer astrapi-sync (Ordner-Synchronisation ueber mehrere eigene Geraete)"
 arch=('any')
 url="https://github.com/astrapi/astrapi-sync-linux"
@@ -40,6 +40,6 @@ build() {
 package() {
   cd "$srcdir/$pkgname/astrapi-sync-cli"
   python -m installer --destdir="$pkgdir" dist/*.whl
-  install -Dm644 packaging/systemd/astrapi-sync-cli.service \
-    "$pkgdir/usr/lib/systemd/user/astrapi-sync-cli.service"
+  install -Dm644 packaging/systemd/astrapi-sync-cli@.service \
+    "$pkgdir/usr/lib/systemd/system/astrapi-sync-cli@.service"
 }
