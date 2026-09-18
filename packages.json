@@ -65,7 +65,7 @@
   },
   {
     "name": "openscad-appimage",
-    "pkgver": "2026.09.12",
+    "pkgver": "2026.09.16",
     "pkgrel": "1",
     "pkgdesc": "The Programmers Solid 3D CAD Modeller (Snapshot AppImage version)",
     "subdir": "openscad-appimage",
